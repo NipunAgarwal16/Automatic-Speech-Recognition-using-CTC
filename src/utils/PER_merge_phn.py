@@ -6,13 +6,13 @@ import numpy as np
 from .chr_idx_mapping import IDX_MAPPING
 
 
-SparseTensor = namedtuple('SparseTensor', 'indices vals shape')
+SparseTensor = namedtuple("SparseTensor", "indices vals shape")
 
 
 def calc_PER(pred, ground_truth, normalize=True, merge_phn=True):
-    """Calculates the Phoneme Error Rate based on python package leven, which produce the same results as 
+    """Calculates the Phoneme Error Rate based on python package leven, which produce the same results as
     tf.edit_distance and tf.reduce_mean based calculation
-    
+
     :param pred: tuple with 3 numpy-typed element representing sparse tensor
     :param ground_truth: tuple with 3 numpy-typed element representing sparse tensor
     :param normalize: if True, the distance between sequence will be divided by the length of the ground_truth length
@@ -20,8 +20,12 @@ def calc_PER(pred, ground_truth, normalize=True, merge_phn=True):
     :return: the PER
     """
 
-    pred_seq_list = seq_to_single_char_strings(sparse_tensor_to_seq_list(pred, merge_phn=merge_phn))
-    truth_seq_list = seq_to_single_char_strings(sparse_tensor_to_seq_list(ground_truth, merge_phn=merge_phn))
+    pred_seq_list = seq_to_single_char_strings(
+        sparse_tensor_to_seq_list(pred, merge_phn=merge_phn)
+    )
+    truth_seq_list = seq_to_single_char_strings(
+        sparse_tensor_to_seq_list(ground_truth, merge_phn=merge_phn)
+    )
 
     assert len(truth_seq_list) == len(pred_seq_list)
 
@@ -38,7 +42,7 @@ def calc_PER(pred, ground_truth, normalize=True, merge_phn=True):
 def seq_to_single_char_strings(seq):
     strings = []
     for s in seq:
-        strings.append(''.join([chr(65 + p) for p in s]))
+        strings.append("".join([chr(65 + p) for p in s]))
 
     return strings
 
@@ -55,7 +59,7 @@ def sparse_tensor_to_seq_list(sparse_seq, merge_phn=True):
         else:
             seq_length = np.max(cur_sample_indices) + 1
 
-        seq = sparse_seq.vals[it:it+seq_length]
+        seq = sparse_seq.vals[it : it + seq_length]
         _seq = [IDX_MAPPING[p] for p in seq] if merge_phn else seq
         phonemes_list.append(_seq)
         it += seq_length

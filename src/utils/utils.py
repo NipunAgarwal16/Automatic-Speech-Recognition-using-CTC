@@ -8,4 +8,4 @@ def phn_map_func(ori_phn_number):
 
 
 def now():
-    return datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S')
+    return datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%d %H:%M:%S")

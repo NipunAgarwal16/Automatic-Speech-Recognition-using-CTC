@@ -2,7 +2,7 @@ import glob
 import os
 import sys
 
-sys.path.append('..')
+sys.path.append("..")
 
 import numpy as np
 import tensorflow as tf
@@ -13,8 +13,21 @@ import tensorflow as tf
 graph = tf.Graph()
 with graph.as_default():
     y_indices = np.array(
-        [[0, 0], [0, 1], [0, 2], [0, 3], [1, 0], [1, 1], [1, 2], [1, 3], [1, 4],
-         [2, 0], [2, 1], [2, 2], [3, 0]]
+        [
+            [0, 0],
+            [0, 1],
+            [0, 2],
+            [0, 3],
+            [1, 0],
+            [1, 1],
+            [1, 2],
+            [1, 3],
+            [1, 4],
+            [2, 0],
+            [2, 1],
+            [2, 2],
+            [3, 0],
+        ]
     )
     y_vals = np.array([1, 1, 2, 2, 3, 2, 1, 4, 4, 1, 2, 3, 4])
     y_shape = np.array([4, 5])
@@ -35,7 +48,9 @@ with graph.as_default():
 ##############################################
 with tf.Session(graph=graph) as sess:
     tf.global_variables_initializer().run()
-    cur_dist, cur_err_sum, cur_err_mean = sess.run([dist, final_err_sum, final_err_mean])
+    cur_dist, cur_err_sum, cur_err_mean = sess.run(
+        [dist, final_err_sum, final_err_mean]
+    )
     # _, cur_dist, cur_err = sess.run([dist, final_err],
     #                                 feed_dict={
     #                                     y_indices: np.array(
